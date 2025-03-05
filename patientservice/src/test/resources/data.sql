@@ -1,0 +1,4 @@
+INSERT INTO Patient(lastName, firstName, birthdate, gender, address, phoneNumber) VALUES ('One', 'Test', '1966-12-03', 'F', '1 Brookside St', '100-222-3333');
+INSERT INTO Patient(lastName, firstName, birthdate, gender, address, phoneNumber) VALUES ('Two', 'Test', '1945-06-02', 'M', '2 High St', '200-333-4444');
+INSERT INTO Patient(lastName, firstName, birthdate, gender, address, phoneNumber) VALUES ('Three', 'Test', '2004-06-18', 'M', '3 Club Road', '300-444-5555');
+INSERT INTO Patient(lastName, firstName, birthdate, gender, address, phoneNumber) VALUES ('Four', 'Test', '2002-06-02', 'F', '4 Valley Dr', '400-555-6666');

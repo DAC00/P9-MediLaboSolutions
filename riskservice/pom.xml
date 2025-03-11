@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.opcr</groupId>
-	<artifactId>risqueservice</artifactId>
+	<artifactId>riskservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>RisqueService</name>
-	<description>RisqueService</description>
+	<name>RiskService</name>
+	<description>RiskService</description>
 	<url/>
 	<licenses>
 		<license/>

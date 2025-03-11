@@ -1,13 +1,13 @@
-package com.opcr.risqueservice;
+package com.opcr.riskservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RisqueServiceApplication {
+public class RiskServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RisqueServiceApplication.class, args);
+		SpringApplication.run(RiskServiceApplication.class, args);
 	}
 
 }

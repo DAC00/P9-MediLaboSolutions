@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @TestPropertySource("/test.properties")
-public class PatientControllerTest {
+public class PatientControllerIT {
 
     @Autowired
     private MockMvc mockMvc;

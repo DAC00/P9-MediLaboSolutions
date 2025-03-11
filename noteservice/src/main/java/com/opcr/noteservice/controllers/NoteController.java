@@ -15,16 +15,32 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
+    /**
+     * Get all the Notes from de database.
+     *
+     * @return a list of all the Note.
+     */
     @GetMapping("/all")
     public List<Note> getNotes() {
         return noteService.getNotes();
     }
 
+    /**
+     * Get all the Note of the Patient with idPatient.
+     *
+     * @param idPatient of the Patient.
+     * @return a list of Note for the Patient.
+     */
     @GetMapping("/{id}")
     public List<Note> getNotesForPatient(@PathVariable("id") Integer idPatient) {
         return noteService.getNotesByPatientId(idPatient);
     }
 
+    /**
+     * Save a new Note.
+     *
+     * @param note to save.
+     */
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveNote(@RequestBody Note note) {

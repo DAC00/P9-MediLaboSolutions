@@ -5,6 +5,7 @@ import com.opcr.noteservice.repositories.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +31,20 @@ public class NoteService {
      */
     public List<Note> getNotesByPatientId(Integer idPatient) {
         return noteRepository.findNotesByIdPatient(idPatient);
+    }
+
+    /**
+     * Get all the text from the Notes of the Patient with idPatient.
+     *
+     * @param idPatient id of the Patient.
+     * @return a list of text from Notes.
+     */
+    public List<String> getTextFromNotes(Integer idPatient) {
+        List<String> textFromNote = new ArrayList<>();
+        for(Note note : getNotesByPatientId(idPatient)){
+            textFromNote.add(note.getText());
+        }
+        return textFromNote;
     }
 
     /**

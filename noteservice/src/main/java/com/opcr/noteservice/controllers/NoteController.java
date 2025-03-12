@@ -37,6 +37,17 @@ public class NoteController {
     }
 
     /**
+     * Get all the texts from the Notes of a Patient.
+     *
+     * @param idPatient of the Patient.
+     * @return a list of text from the Notes.
+     */
+    @GetMapping("/text/{id}")
+    public List<String> getTextFromNotesForPatient(@PathVariable("id") Integer idPatient) {
+        return noteService.getTextFromNotes(idPatient);
+    }
+
+    /**
      * Save a new Note.
      *
      * @param note to save.

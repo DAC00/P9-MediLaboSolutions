@@ -15,6 +15,5 @@ public class Note {
     @Id
     private Integer id;
     private Integer idPatient;
-    private String patientName;
     private String text;
 }

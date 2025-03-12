@@ -40,10 +40,10 @@ public class NoteControllerIT {
     public void setUpEach() {
         noteRepository.deleteAll();
         List<Note> notes = new ArrayList<>();
-        notes.add(new Note(1, 1, "TestOne", "Test."));
-        notes.add(new Note(2, 1, "TestOne", "One TEST."));
-        notes.add(new Note(3, 2, "TestTwo", "Two two."));
-        notes.add(new Note(4, 3, "TestThree", "Test three."));
+        notes.add(new Note(1, 1, "Test."));
+        notes.add(new Note(2, 1, "One TEST."));
+        notes.add(new Note(3, 2, "Two two."));
+        notes.add(new Note(4, 3, "Test three."));
         noteRepository.saveAll(notes);
     }
 
@@ -65,7 +65,7 @@ public class NoteControllerIT {
 
     @Test
     public void saveNoteTest() {
-        Note newNote = new Note(5, 4, "newTest", "NewNew");
+        Note newNote = new Note(5, 4, "NewNew");
         ResponseEntity<?> response = restTemplate.postForEntity("/api/note/add", newNote, Void.class);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());

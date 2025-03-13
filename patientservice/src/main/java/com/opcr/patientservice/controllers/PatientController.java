@@ -1,6 +1,7 @@
 package com.opcr.patientservice.controllers;
 
 import com.opcr.patientservice.models.Patient;
+import com.opcr.patientservice.models.PatientInfoDTO;
 import com.opcr.patientservice.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,11 @@ public class PatientController {
         return patient.orElse(null);
     }
 
+    @GetMapping("/info/{id}")
+    public PatientInfoDTO getPatientBirthdateAndGender(@PathVariable("id") Integer idPatient) {
+        return patientService.getPatientBirthdateAndGender(idPatient);
+    }
+
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void updatePatient(@PathVariable("id") Integer idPatient, @RequestBody Patient patient) {
@@ -35,12 +41,12 @@ public class PatientController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addPatient(@RequestBody Patient patient){
+    public void addPatient(@RequestBody Patient patient) {
         patientService.addPatient(patient);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deletePatient(@PathVariable("id") Integer idPatient){
+    public void deletePatient(@PathVariable("id") Integer idPatient) {
         patientService.deletePatient(idPatient);
     }
 }

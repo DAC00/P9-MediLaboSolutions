@@ -1,6 +1,7 @@
 package com.opcr.patientservice.services;
 
 import com.opcr.patientservice.models.Patient;
+import com.opcr.patientservice.models.PatientInfoDTO;
 import com.opcr.patientservice.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,17 @@ public class PatientService {
     }
 
     /**
+     * Get the birthdate and gender of a Patient with the id.
+     *
+     * @param id of the Patient.
+     * @return a PatientInfoDTO.
+     */
+    public PatientInfoDTO getPatientBirthdateAndGender(Integer id) {
+        Optional<Patient> patient = getPatient(id);
+        return patient.map(value -> new PatientInfoDTO(value.getBirthdate(), value.getGender())).orElse(null);
+    }
+
+    /**
      * Add a Patient to the database.
      *
      * @param patientToAdd to the database.
@@ -54,7 +66,7 @@ public class PatientService {
         }
     }
 
-    public void deletePatient(Integer idPatient){
+    public void deletePatient(Integer idPatient) {
         patientRepository.deleteById(idPatient);
     }
 }

@@ -5,9 +5,7 @@ CREATE TABLE Patient (
   birthdate date NOT NULL,
   gender VARCHAR(1) NOT NULL,
   address VARCHAR(125),
-  phoneNumber VARCHAR(125),
-
-  PRIMARY KEY (id)
+  phoneNumber VARCHAR(125)
 );
 
 insert into Patient(lastName,firstName,birthdate,gender,address,phoneNumber) values ('TestNone','Test','1966-12-03','F','1 Brookside St','100-222-3333');

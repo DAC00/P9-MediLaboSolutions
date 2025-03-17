@@ -10,7 +10,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientInfoDTO {
-    private Integer idPatient;
     private String gender;
     private Date birthdate;
 }

@@ -16,6 +16,10 @@ spring:
           uri: http://riskservice:8083
           predicates:
             - Path=/api/risk/**
+        - id: frontservice
+          uri: http://frontservice:8084
+          predicates:
+            - Path=/patient/**
 server:
   port: 8080
 logging:

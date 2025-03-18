@@ -47,6 +47,15 @@ services:
     networks:
       - p9_MediLaboSolutions
 
+  frontservice:
+    build:
+      context: ./frontservice
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"
+    networks:
+      - p9_MediLaboSolutions
+
   db_mysql_patient:
     image: mysql:8.0
     restart: always

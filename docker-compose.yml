@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - p9_MediLaboSolutions
+
+  patientservice:
+    build:
+      context: ./patientservice
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db_mysql_patient:3306/p9_patient
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - db_mysql_patient
+    networks:
+      - p9_MediLaboSolutions
+
+  noteservice:
+    build:
+      context: ./noteservice
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://db_mongo_note:27017/p9_note
+    depends_on:
+      - db_mongo_note
+    networks:
+      - p9_MediLaboSolutions
+
+  riskservice:
+    build:
+      context: ./riskservice
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    networks:
+      - p9_MediLaboSolutions
+
+  db_mysql_patient:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: p9_patient
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_mysql_patient:/var/lib/mysql
+      - ./patientservice/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - p9_MediLaboSolutions
+
+  db_mongo_note:
+    image: mongo:4.4
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - db_mongo_note:/data/db
+    networks:
+      - p9_MediLaboSolutions
+
+volumes:
+  db_mysql_patient:
+  db_mongo_note:
+
+networks:
+  p9_MediLaboSolutions:

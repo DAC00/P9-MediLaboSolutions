@@ -70,7 +70,7 @@ public class RiskService {
      * @param birthdate of the Patient.
      * @return the age.
      */
-    private int calculateAgeFromBirthdate(Date birthdate) {
+    public int calculateAgeFromBirthdate(Date birthdate) {
         return Math.abs(Period.between(LocalDate.now(), birthdate.toLocalDate()).getYears());
     }
 
@@ -80,7 +80,7 @@ public class RiskService {
      * @param textFromNotes the content of the Notes.
      * @return number of triggers in the list textFromNotes.
      */
-    private int findTheNumberOfTriggers(List<String> textFromNotes) {
+    public int findTheNumberOfTriggers(List<String> textFromNotes) {
         List<String> triggers = Arrays.asList("Hémoglobine A1C"
                 , "Microalbumine"
                 , "Taille"

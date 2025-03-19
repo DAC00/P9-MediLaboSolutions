@@ -14,8 +14,6 @@ services:
     build:
       context: ./patientservice
       dockerfile: Dockerfile
-    ports:
-      - "8081:8081"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db_mysql_patient:3306/p9_patient
       SPRING_DATASOURCE_USERNAME: admin
@@ -29,8 +27,6 @@ services:
     build:
       context: ./noteservice
       dockerfile: Dockerfile
-    ports:
-      - "8082:8082"
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://db_mongo_note:27017/p9_note
     depends_on:
@@ -42,8 +38,6 @@ services:
     build:
       context: ./riskservice
       dockerfile: Dockerfile
-    ports:
-      - "8083:8083"
     networks:
       - p9_MediLaboSolutions
 
@@ -51,8 +45,6 @@ services:
     build:
       context: ./frontservice
       dockerfile: Dockerfile
-    ports:
-      - "8084:8084"
     networks:
       - p9_MediLaboSolutions
 

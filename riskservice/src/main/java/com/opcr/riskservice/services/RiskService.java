@@ -40,24 +40,24 @@ public class RiskService {
 
         if (age >= 30) {
             if (nbTriggers >= 8) {
-                risk.setRiskStatus("Early onset");
+                risk.setRiskStatus("EarlyOnset");
             } else if (nbTriggers >= 6) {
-                risk.setRiskStatus("In Danger");
+                risk.setRiskStatus("InDanger");
             } else if (nbTriggers >= 2) {
                 risk.setRiskStatus("Borderline");
             }
         } else {
             if (patientInfo.getGender().equals("M")) {
                 if (nbTriggers >= 5) {
-                    risk.setRiskStatus("Early onset");
+                    risk.setRiskStatus("EarlyOnset");
                 } else if (nbTriggers >= 3) {
-                    risk.setRiskStatus("In Danger");
+                    risk.setRiskStatus("InDanger");
                 }
             } else {
                 if (nbTriggers >= 7) {
-                    risk.setRiskStatus("Early onset");
+                    risk.setRiskStatus("EarlyOnset");
                 } else if (nbTriggers >= 5) {
-                    risk.setRiskStatus("In Danger");
+                    risk.setRiskStatus("InDanger");
                 }
             }
         }

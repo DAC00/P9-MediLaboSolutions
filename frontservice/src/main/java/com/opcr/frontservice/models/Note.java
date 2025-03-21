@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Note {
 
-    private Integer id;
+    private String id;
 
     private Integer idPatient;
 

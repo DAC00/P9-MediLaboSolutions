@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.sql.Date;
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Arrays;
@@ -97,11 +98,44 @@ public class RiskService {
         int nbTriggers = 0;
 
         for (String text : textFromNotes) {
+            String textLower = normalizeAndRemoveAccents(text.toLowerCase());
             for (String trigger : triggers) {
-                if (text.toUpperCase().contains(trigger.toUpperCase())) nbTriggers++;
+                String triggerLower = normalizeAndRemoveAccents(trigger.toLowerCase());
+                if (textLower.contains(triggerLower)) {
+                    nbTriggers += countOccurrences(textLower, triggerLower);
+                }
             }
         }
         return nbTriggers;
+    }
+
+    /**
+     * Count the number of times a word appears in a text.
+     *
+     * @param text       source.
+     * @param wordToFind word to search for.
+     * @return number of appearance.
+     */
+    public int countOccurrences(String text, String wordToFind) {
+        int count = 0;
+        int index = 0;
+        while ((index = text.indexOf(wordToFind, index)) != -1) {
+            count++;
+            index += wordToFind.length();
+        }
+        return count;
+    }
+
+    /**
+     * Normalize and remove the accents of the input.
+     *
+     * @param input String to use.
+     * @return a String normalize without accents.
+     */
+    public String normalizeAndRemoveAccents(String input) {
+        return input == null ? null :
+                Normalizer.normalize(input, Normalizer.Form.NFD)
+                        .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
     /**

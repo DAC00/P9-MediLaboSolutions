@@ -24,8 +24,22 @@ public class RiskServiceTest {
 
     @Test
     public void findTheNumberOfTriggersTest() {
-        List<String> listText = Arrays.asList("Taille Taille Réaction Taille", "test","POIDS test test fumeur.");
-        assertEquals(4, riskService.findTheNumberOfTriggers(listText));
+        List<String> listText = Arrays.asList("Taille Taille Réaction taille", "test", "POIDS test test fumeur.", "Hémoglobine A1C test");
+        assertEquals(7, riskService.findTheNumberOfTriggers(listText));
+    }
+
+    @Test
+    public void normalizeAndRemoveAccentsTest() {
+        String wordToNormalize = "Réaction";
+        String wordNormalize = riskService.normalizeAndRemoveAccents(wordToNormalize);
+        assertEquals("Reaction", wordNormalize);
+    }
+
+    @Test
+    public void countOccurrencesTest() {
+        String text = "blabla test test truc blabla test";
+        String wordToFind = "test";
+        assertEquals(3, riskService.countOccurrences(text, wordToFind));
     }
 
     @Test

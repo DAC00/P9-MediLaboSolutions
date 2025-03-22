@@ -15,15 +15,6 @@ public class NoteService {
     private NoteRepository noteRepository;
 
     /**
-     * Get all the Notes from the database.
-     *
-     * @return the list of all the Note.
-     */
-    public List<Note> getNotes() {
-        return noteRepository.findAll();
-    }
-
-    /**
      * Get all the Note for a Patient with patientId.
      *
      * @param idPatient id of a Patient.
@@ -41,7 +32,7 @@ public class NoteService {
      */
     public List<String> getTextFromNotes(Integer idPatient) {
         List<String> textFromNote = new ArrayList<>();
-        for(Note note : getNotesByPatientId(idPatient)){
+        for (Note note : getNotesByPatientId(idPatient)) {
             textFromNote.add(note.getText());
         }
         return textFromNote;
@@ -51,8 +42,9 @@ public class NoteService {
      * Save a Note in the database.
      *
      * @param noteToSave is the Note to save.
+     * @return the Note saved.
      */
-    public void saveNote(Note noteToSave) {
-        noteRepository.save(noteToSave);
+    public Note saveNote(Note noteToSave) {
+        return noteRepository.save(noteToSave);
     }
 }

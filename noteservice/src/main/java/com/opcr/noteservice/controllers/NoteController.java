@@ -16,16 +16,6 @@ public class NoteController {
     private NoteService noteService;
 
     /**
-     * Get all the Notes from de database.
-     *
-     * @return a list of all the Note.
-     */
-    @GetMapping("/all")
-    public List<Note> getNotes() {
-        return noteService.getNotes();
-    }
-
-    /**
      * Get all the Note of the Patient with idPatient.
      *
      * @param idPatient of the Patient.

@@ -40,29 +40,37 @@ public class PatientService {
      * @param id of the Patient.
      * @return a PatientInfoDTO.
      */
-    public PatientInfoDTO getPatientBirthdateAndGender(Integer id) {
+    public Optional<PatientInfoDTO> getPatientBirthdateAndGender(Integer id) {
         Optional<Patient> patient = getPatient(id);
-        return patient.map(value -> new PatientInfoDTO(value.getBirthdate(), value.getGender())).orElse(null);
+        return patient.map(value -> new PatientInfoDTO(value.getBirthdate(), value.getGender()));
     }
 
     /**
-     * Add a Patient to the database.
+     * Save a Patient to the database.
      *
-     * @param patientToAdd to the database.
+     * @param patientToSave to the database.
+     * @return the Patient saved.
      */
-    public void addPatient(Patient patientToAdd) {
-        patientRepository.save(patientToAdd);
+    public Patient savePatient(Patient patientToSave) {
+        return patientRepository.save(patientToSave);
     }
 
     /**
      * Update the information of the Patient with idPatient as id.
      *
-     * @param idPatient       the id of the Patient to update.
-     * @param patientToUpdate new data of the Patient.
+     * @param idPatient      the id of the Patient to update.
+     * @param patientUpdated new data of the Patient.
+     * @return a Patient with updated data.
      */
-    public void updatePatient(Integer idPatient, Patient patientToUpdate) {
-        if (getPatient(idPatient).isPresent() && idPatient.equals(patientToUpdate.getId())) {
-            patientRepository.save(patientToUpdate);
-        }
+    public Optional<Patient> updatePatient(Integer idPatient, Patient patientUpdated) {
+        return getPatient(idPatient).map(patientToUpdate -> {
+            patientToUpdate.setLastName(patientUpdated.getLastName());
+            patientToUpdate.setFirstName(patientUpdated.getFirstName());
+            patientToUpdate.setBirthdate(patientUpdated.getBirthdate());
+            patientToUpdate.setGender(patientUpdated.getGender());
+            patientToUpdate.setAddress(patientUpdated.getAddress());
+            patientToUpdate.setPhoneNumber(patientUpdated.getPhoneNumber());
+            return patientRepository.save(patientToUpdate);
+        });
     }
 }

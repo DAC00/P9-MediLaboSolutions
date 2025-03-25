@@ -1,11 +1,8 @@
 package com.opcr.riskservice.services;
 
-import com.opcr.riskservice.models.PatientInfoDTO;
+import com.opcr.riskservice.models.PatientInfoRisk;
 import com.opcr.riskservice.models.Risk;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import java.sql.Date;
 import java.text.Normalizer;
@@ -17,23 +14,18 @@ import java.util.List;
 @Service
 public class RiskService {
 
-    @Value("${url.api.patient}")
-    private String urlApiPatient;
-
-    @Value("${url.api.note}")
-    private String urlApiNote;
-
     /**
      * Evaluate the Risk for a Patient with idPatient of developing diabetes.
+     * Need a PatientInfoRisk with the data of the Patient needed for the evaluation.
      *
-     * @param idPatient id of the Patient.
+     * @param idPatient       id of the Patient.
+     * @param patientInfoRisk information needed for the evaluation.
      * @return the evaluated Risk.
      */
-    public Risk evaluateRiskForPatient(Integer idPatient) {
-        PatientInfoDTO patientInfo = getPatientInfo(idPatient);
+    public Risk evaluateRiskForPatient(Integer idPatient, PatientInfoRisk patientInfoRisk) {
 
-        int age = calculateAgeFromBirthdate(patientInfo.getBirthdate());
-        int nbTriggers = findTheNumberOfTriggers(getTextNote(idPatient));
+        int age = calculateAgeFromBirthdate(patientInfoRisk.getBirthdate());
+        int nbTriggers = findTheNumberOfTriggers(patientInfoRisk.getTextNote());
 
         Risk risk = new Risk();
         risk.setIdPatient(idPatient);
@@ -48,7 +40,7 @@ public class RiskService {
                 risk.setRiskStatus("Borderline");
             }
         } else {
-            if (patientInfo.getGender().equals("M")) {
+            if (patientInfoRisk.getGender().equals("M")) {
                 if (nbTriggers >= 5) {
                     risk.setRiskStatus("EarlyOnset");
                 } else if (nbTriggers >= 3) {
@@ -138,34 +130,4 @@ public class RiskService {
                         .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
-    /**
-     * Get information from the PatientService into aPatientInfoDTO.
-     *
-     * @param idPatient id of the Patient.
-     * @return a PatientInfoDTO witch contains age and gender.
-     */
-    public PatientInfoDTO getPatientInfo(Integer idPatient) {
-        Mono<PatientInfoDTO> mono = WebClient.create()
-                .get()
-                .uri(urlApiPatient + idPatient)
-                .retrieve()
-                .bodyToMono(PatientInfoDTO.class);
-        return mono.block();
-    }
-
-    /**
-     * Get the all the text from the Notes for a Patient with idPatient.
-     *
-     * @param idPatient id of the Patient.
-     * @return the content of the Notes.
-     */
-    public List<String> getTextNote(Integer idPatient) {
-        Mono<List<String>> mono = WebClient.create()
-                .get()
-                .uri(urlApiNote + idPatient)
-                .retrieve()
-                .bodyToFlux(String.class)
-                .collectList();
-        return mono.block();
-    }
 }

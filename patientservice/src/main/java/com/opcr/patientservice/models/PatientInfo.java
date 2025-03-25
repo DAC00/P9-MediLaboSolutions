@@ -7,7 +7,7 @@ import java.sql.Date;
 
 @Data
 @AllArgsConstructor
-public class PatientInfoDTO {
+public class PatientInfo {
     private Date birthdate;
     private String gender;
 }

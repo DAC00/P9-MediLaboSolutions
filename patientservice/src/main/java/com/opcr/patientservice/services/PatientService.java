@@ -1,7 +1,7 @@
 package com.opcr.patientservice.services;
 
 import com.opcr.patientservice.models.Patient;
-import com.opcr.patientservice.models.PatientInfoDTO;
+import com.opcr.patientservice.models.PatientInfo;
 import com.opcr.patientservice.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,11 +38,11 @@ public class PatientService {
      * Get the birthdate and gender of a Patient with the id.
      *
      * @param id of the Patient.
-     * @return a PatientInfoDTO.
+     * @return a PatientInfo.
      */
-    public Optional<PatientInfoDTO> getPatientBirthdateAndGender(Integer id) {
+    public Optional<PatientInfo> getPatientBirthdateAndGender(Integer id) {
         Optional<Patient> patient = getPatient(id);
-        return patient.map(value -> new PatientInfoDTO(value.getBirthdate(), value.getGender()));
+        return patient.map(value -> new PatientInfo(value.getBirthdate(), value.getGender()));
     }
 
     /**

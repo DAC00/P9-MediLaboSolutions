@@ -2,6 +2,7 @@ package com.opcr.frontservice.services;
 
 import com.opcr.frontservice.models.Patient;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -17,12 +18,14 @@ public class PatientService {
     /**
      * Get a list of all the Patient.
      *
+     * @param token JWToken of the User.
      * @return a list of Patient.
      */
-    public List<Patient> getPatients() {
+    public List<Patient> getPatients(String token) {
         Mono<List<Patient>> list = WebClient.create()
                 .get()
                 .uri(urlApiPatient + "/all")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .retrieve()
                 .bodyToFlux(Patient.class)
                 .collectList();
@@ -33,12 +36,14 @@ public class PatientService {
      * Get the Patient with idPatient.
      *
      * @param idPatient id of the Patient.
+     * @param token     JWToken of the User.
      * @return a Patient.
      */
-    public Patient getPatientWithId(Integer idPatient) {
+    public Patient getPatientWithId(Integer idPatient, String token) {
         Mono<Patient> patient = WebClient.create()
                 .get()
                 .uri(urlApiPatient + "/" + idPatient)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .retrieve()
                 .bodyToMono(Patient.class);
         return patient.block();
@@ -48,11 +53,13 @@ public class PatientService {
      * Save a new Patient.
      *
      * @param patientToSave the Patient to save.
+     * @param token         JWToken of the User.
      */
-    public void savePatient(Patient patientToSave) {
+    public void savePatient(Patient patientToSave, String token) {
         WebClient.create()
                 .post()
                 .uri(urlApiPatient + "/add")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .bodyValue(patientToSave)
                 .retrieve()
                 .toBodilessEntity().block();
@@ -63,11 +70,13 @@ public class PatientService {
      *
      * @param patientToUpdate Patient with new data.
      * @param idPatient       id of the Patient to update.
+     * @param token           JWToken of the User.
      */
-    public void updatePatient(Patient patientToUpdate, Integer idPatient) {
+    public void updatePatient(Patient patientToUpdate, Integer idPatient, String token) {
         WebClient.create()
                 .put()
                 .uri(urlApiPatient + "/update/" + idPatient)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .bodyValue(patientToUpdate)
                 .retrieve()
                 .toBodilessEntity().block();

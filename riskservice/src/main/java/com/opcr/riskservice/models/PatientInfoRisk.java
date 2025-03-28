@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -13,5 +12,4 @@ import java.util.List;
 public class PatientInfoRisk {
     private String gender;
     private Date birthdate;
-    private List<String> textNote;
 }

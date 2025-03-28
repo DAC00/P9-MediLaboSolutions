@@ -19,7 +19,7 @@ spring:
         - id: frontservice
           uri: http://frontservice:8084
           predicates:
-            - Path=/patient/**
+            - Path=/patient/**, /login
 server:
   port: 8080
 logging:

@@ -2,7 +2,10 @@ package com.opcr.riskservice.services;
 
 import com.opcr.riskservice.models.PatientInfoRisk;
 import com.opcr.riskservice.models.Risk;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.sql.Date;
 import java.text.Normalizer;
@@ -14,18 +17,27 @@ import java.util.List;
 @Service
 public class RiskService {
 
+    @Value("${url.api.note}")
+    private String urlApiNote;
+
+    @Value("${url.api.patient}")
+    private String urlApiPatient;
+
     /**
      * Evaluate the Risk for a Patient with idPatient of developing diabetes.
      * Need a PatientInfoRisk with the data of the Patient needed for the evaluation.
      *
-     * @param idPatient       id of the Patient.
-     * @param patientInfoRisk information needed for the evaluation.
+     * @param idPatient      id of the Patient.
+     * @param bearerAndToken JWToken of the User.
      * @return the evaluated Risk.
      */
-    public Risk evaluateRiskForPatient(Integer idPatient, PatientInfoRisk patientInfoRisk) {
+    public Risk evaluateRiskForPatient(Integer idPatient, String bearerAndToken) {
+
+        PatientInfoRisk patientInfoRisk = getPatientInfoRisk(idPatient, bearerAndToken);
+        List<String> textNotes = getTextNotes(idPatient, bearerAndToken);
 
         int age = calculateAgeFromBirthdate(patientInfoRisk.getBirthdate());
-        int nbTriggers = findTheNumberOfTriggers(patientInfoRisk.getTextNote());
+        int nbTriggers = findTheNumberOfTriggers(textNotes);
 
         Risk risk = new Risk();
         risk.setIdPatient(idPatient);
@@ -130,4 +142,36 @@ public class RiskService {
                         .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
+    /**
+     * Get the gender and birthdate of a Patient with idPatient, into a PatientInfoRisk.
+     *
+     * @param idPatient      id of the Patient.
+     * @param bearerAndToken JWToken of the User.
+     * @return a PatientInfoRisk with Patient data.
+     */
+    private PatientInfoRisk getPatientInfoRisk(Integer idPatient, String bearerAndToken) {
+        return WebClient.create()
+                .get()
+                .uri(urlApiPatient + "/" + idPatient)
+                .header(HttpHeaders.AUTHORIZATION, bearerAndToken)
+                .retrieve()
+                .bodyToMono(PatientInfoRisk.class).block();
+    }
+
+    /**
+     * Get a List of the text from the Notes of a Patient with idPatient.
+     *
+     * @param idPatient      id of the Patient.
+     * @param bearerAndToken JWToken of the User.
+     * @return a List of String.
+     */
+    private List<String> getTextNotes(Integer idPatient, String bearerAndToken) {
+        return WebClient.create()
+                .get()
+                .uri(urlApiNote + "/" + idPatient)
+                .header(HttpHeaders.AUTHORIZATION, bearerAndToken)
+                .retrieve()
+                .bodyToFlux(String.class)
+                .collectList().block();
+    }
 }

@@ -56,8 +56,6 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "3306:3306"
     volumes:
       - db_mysql_patient:/var/lib/mysql
       - ./patientservice/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -67,8 +65,6 @@ services:
   db_mongo_note:
     image: mongo:4.4
     restart: always
-    ports:
-      - "27017:27017"
     volumes:
       - db_mongo_note:/data/db
     networks:

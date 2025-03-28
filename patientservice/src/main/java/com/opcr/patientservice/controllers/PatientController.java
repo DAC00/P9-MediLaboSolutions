@@ -1,7 +1,7 @@
 package com.opcr.patientservice.controllers;
 
 import com.opcr.patientservice.models.Patient;
-import com.opcr.patientservice.models.PatientInfo;
+import com.opcr.patientservice.models.PatientInfoRisk;
 import com.opcr.patientservice.services.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,17 +65,17 @@ public class PatientController {
      * If a Patient is found the status is OK, if not the status is NOT FOUND.
      *
      * @param idPatient id of the Patient.
-     * @return a ResponseEntity with a PatientInfo.
+     * @return a ResponseEntity with a PatientInfoRisk.
      */
     @GetMapping("/info/{id}")
-    public ResponseEntity<PatientInfo> getPatientBirthdateAndGender(@PathVariable("id") Integer idPatient) {
-        logger.info("GET /info/id. Get a PatientInfo with id {}.", idPatient);
-        Optional<PatientInfo> patientInfo = patientService.getPatientBirthdateAndGender(idPatient);
+    public ResponseEntity<PatientInfoRisk> getPatientBirthdateAndGender(@PathVariable("id") Integer idPatient) {
+        logger.info("GET /info/id. Get a PatientInfoRisk with id {}.", idPatient);
+        Optional<PatientInfoRisk> patientInfo = patientService.getPatientBirthdateAndGender(idPatient);
         if (patientInfo.isPresent()) {
-            logger.info("GET /id. Get a PatientInfo with id {}. PatientInfo found.", idPatient);
+            logger.info("GET /id. Get a PatientInfoRisk with id {}. PatientInfoRisk found.", idPatient);
             return ResponseEntity.ok(patientInfo.get());
         } else {
-            logger.info("GET /id. Get a PatientInfo with id {}. PatientInfo not found.", idPatient);
+            logger.info("GET /id. Get a PatientInfoRisk with id {}. PatientInfoRisk not found.", idPatient);
             return ResponseEntity.notFound().build();
         }
     }

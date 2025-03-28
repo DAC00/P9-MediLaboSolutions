@@ -43,9 +43,9 @@ public class PatientAddController {
      * @param errorMessage  an error message.
      * @param patient       Patient to add.
      * @param bindingResult validation result.
-     * @param token         JWT token of the User from the Cookie.
+     * @param token         JWToken of the User from the Cookie.
      * @param model         to pass data to the view.
-     * @return name of the View with a message.
+     * @return redirect the User with a message.
      */
     @PostMapping("/patient/add")
     public String addPatient(@RequestParam(value = "message", required = false) String message,

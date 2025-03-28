@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" >
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,7 +27,7 @@
                     <a class="nav-link" aria-current="page" href="/patient/add">Add Patient</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Exit</a>
+                    <a class="nav-link" href="/logout">LOGOUT</a>
                 </li>
             </ul>
         </div>
@@ -55,7 +55,7 @@
                 <form class="row g-2" action="#" th:action="@{/patient/{id}/update(id=${patient.id})}"
                       th:object="${patient}" method="post">
                     <div class="col-md-12">
-                        <h1 class="display-6">DATA PATIENT <span th:field="*{id}" th:text="*{id}"></span></h1>
+                        <h1 class="display-6">PATIENT <span th:field="*{id}" th:text="*{id}"></span></h1>
                     </div>
                     <div class="col-md-6">
                         <label for="validationDefault01" class="form-label">Last name</label>
@@ -99,7 +99,7 @@
             <!---------------------------------------------->
             <!-----------------RISK DISPLAY----------------->
             <!---------------------------------------------->
-            <div class="container mt-4 ">
+            <div class="container mt-4">
                 <h1 class="display-6">PATIENT RISK</h1>
                 <th:block th:switch="${risk}">
                     <div th:case="NONE">

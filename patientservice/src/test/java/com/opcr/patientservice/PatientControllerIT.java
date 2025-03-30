@@ -79,7 +79,6 @@ public class PatientControllerIT {
                 .consumeWith(response -> {
                     Patient patient = response.getResponseBody();
                     assertNull(patient);
-                    ;
                 });
     }
 

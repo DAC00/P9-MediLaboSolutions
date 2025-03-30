@@ -149,7 +149,7 @@ public class RiskService {
      * @param bearerAndToken JWToken of the User.
      * @return a PatientInfoRisk with Patient data.
      */
-    private PatientInfoRisk getPatientInfoRisk(Integer idPatient, String bearerAndToken) {
+    public PatientInfoRisk getPatientInfoRisk(Integer idPatient, String bearerAndToken) {
         return WebClient.create()
                 .get()
                 .uri(urlApiPatient + "/" + idPatient)
@@ -165,7 +165,7 @@ public class RiskService {
      * @param bearerAndToken JWToken of the User.
      * @return a List of String.
      */
-    private List<String> getTextNotes(Integer idPatient, String bearerAndToken) {
+    public List<String> getTextNotes(Integer idPatient, String bearerAndToken) {
         return WebClient.create()
                 .get()
                 .uri(urlApiNote + "/" + idPatient)

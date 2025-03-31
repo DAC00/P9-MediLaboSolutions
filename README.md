@@ -12,7 +12,7 @@ Les microservices sont :
 
 Le schéma ci-dessous permet de visualiser simplement l’architecture du projet.
 
-IMAGE
+![P9_architecture.png](P9_architecture.png)
 
 # Utilisation
 

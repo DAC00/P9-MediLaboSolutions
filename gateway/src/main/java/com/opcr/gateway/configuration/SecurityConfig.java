@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .pathMatchers("/authenticate", "/login", "/logout").permitAll()
                         .anyExchange().authenticated()
                 )
+                .formLogin(formLoginSpec -> formLoginSpec.loginPage("/login"))
                 .addFilterAt(new TokenAuthenticationWebFilter(tokenService), SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }
